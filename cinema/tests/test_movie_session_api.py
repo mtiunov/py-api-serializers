@@ -39,7 +39,6 @@ class MovieSessionApiTests(TestCase):
 
     def test_get_movie_sessions(self):
         movie_sessions = self.client.get("/api/cinema/movie_sessions/")
-        print(movie_sessions.data)
         movie_session = {
             "movie_title": "Titanic",
             "cinema_hall_name": "White",
@@ -61,14 +60,12 @@ class MovieSessionApiTests(TestCase):
             },
 
         )
-        print(movies.data)
         movie_sessions = MovieSession.objects.all()
         self.assertEqual(movies.status_code, status.HTTP_201_CREATED)
         self.assertEqual(movie_sessions.count(), 2)
 
     def test_get_movie_session(self):
         response = self.client.get("/api/cinema/movie_sessions/1/")
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["movie"]["title"], "Titanic")
         self.assertEqual(
